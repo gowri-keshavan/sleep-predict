@@ -6,14 +6,13 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-# Load ML model
 model = joblib.load('sleep_model.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.json
     
-    # Prepare input for ML model
+
     input_data = [
         [
             float(data['hours']),
@@ -26,7 +25,6 @@ def predict():
         ]
     ]
     
-    # Predict
     prediction = model.predict(input_data)[0]
     score = max(1, min(5, round(prediction)))
     
